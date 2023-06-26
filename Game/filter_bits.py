@@ -32,21 +32,32 @@ bits_dict = {
 
 
 wordlist_nederlands = get_vocabulary()["Nederlands"]
+wordlist_english = get_vocabulary()["English"]
 
 
 def fill_bits_dict_nederlands():
     for i in range(2, 7):
+        outcomes = get_word_outcomes()["Nederlands"][str(i)]
         wordlist = wordlist_nederlands[str(i)]
-        all_feedback = calc_possible_feedback(i)
-        patterns = generate_possible_outcomes(wordlist)
-        entropies = calculate_entropies(wordlist, wordlist, patterns, all_feedback)
+        all_feedbacks = calc_possible_feedback(i)
+        entropies = calculate_entropies(wordlist, wordlist, outcomes, all_feedbacks)
         bits_dict["Nederlands"][i] = entropies
+
+
+def fill_bits_dict_english():
+    for i in range(5, 6):
+        outcomes = get_word_outcomes()["English"][str(i)]
+        wordlist = wordlist_english[str(i)]
+        all_feedbacks = calc_possible_feedback(i)
+        entropies = calculate_entropies(wordlist, wordlist, outcomes, all_feedbacks)
+        bits_dict["English"][i] = entropies
 
 
 def export_bits_to_json(file, all_bits):
     with open(file, "w") as jsonfile:
-        json.dump(bits_dict, jsonfile)
+        json.dump(all_bits, jsonfile)
 
 
 fill_bits_dict_nederlands()
-export_bits_to_json("word-outcomes.json", bits_dict)
+fill_bits_dict_english()
+export_bits_to_json("word-entropies.json", bits_dict)

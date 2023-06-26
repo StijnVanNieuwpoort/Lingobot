@@ -2,6 +2,8 @@ import json
 import os
 import random
 import itertools
+import jsonlines
+from ast import literal_eval
 
 
 def get_vocabulary():
@@ -17,12 +19,27 @@ def get_vocabulary():
 
     return data
 
-def get_word_bit_scores():
+
+def get_word_outcomes():
     # Get the current directory
     current_directory = os.getcwd()
 
     # Construct the path to the wordlist.json file
     json_path = os.path.join(current_directory, '..', 'Game', 'word-outcomes.json')
+
+    # Read the JSON data from the file
+    with open(json_path, 'r') as file:
+        data = json.load(file)
+
+    return data
+
+
+def get_word_bit_scores():
+    # Get the current directory
+    current_directory = os.getcwd()
+
+    # Construct the path to the wordlist.json file
+    json_path = os.path.join(current_directory, '..', 'Game', 'word-entropies.json')
 
     # Read the JSON data from the file
     with open(json_path, 'r') as file:
@@ -67,6 +84,8 @@ def first_turn_best_word(language, word_length):
     best_words = []
     if language == "Nederlands":
         best_words = ["AI", "AIO", "ROES", "SATER", "SINTER"]
+    if language == "English":
+        best_words = ["RAISE"]
 
     for word in best_words:
         if len(word) == int(word_length):
@@ -74,5 +93,8 @@ def first_turn_best_word(language, word_length):
 
     return 0
 
-# print(calc_highest_info_word(get_word_bit_scores()["Nederlands"]["6"]))
-# print(first_turn_best_word("Nederlands", "6"))
+
+# print(calc_highest_info_word(get_word_bit_scores()["Nederlands"]["5"]))
+# print(first_turn_best_word("Nederlands", "5"))
+# print(calc_highest_info_word(get_word_bit_scores()["English"]["5"]))
+# print(first_turn_best_word("English", "5"))

@@ -14,8 +14,15 @@ def simple(possible_answers):
 
 
 def information(possible_answers, language, word_length):
+    if len(possible_answers) < 3:
+        return possible_answers[0]
+
+    # Checks if outcomes has already been cached so it doesn't have to load it again.
+    if not hasattr(information, 'outcomes'):
+        information.outcomes = get_word_outcomes()[language][word_length]
+
     all_feedback = calc_possible_feedback(int(word_length))
     all_words = get_vocabulary()[language][word_length]
-    outcomes = generate_possible_outcomes(possible_answers)
-    entropies = calculate_entropies(possible_answers, possible_answers, outcomes, all_feedback)
+    entropies = calculate_entropies(all_words, possible_answers, information.outcomes, all_feedback)
+
     return calc_highest_info_word(entropies)

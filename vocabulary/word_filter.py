@@ -52,9 +52,18 @@ def fill_wordlist_nederlands(wordlist):
                     wordlist["Nederlands"][wordlength].append(word.rstrip("\n").upper())
 
 
+def fill_wordlist_english(wordlist):
+    with open("English Words/possible_words.txt", "r") as file:
+        for word in file:
+            wordlength = len(word.strip("\n"))
+            if is_valid_word(word) and wordlength in wordlist["English"]:
+                wordlist["English"][wordlength].append(word.rstrip("\n").upper())
+
+
 def export_wordlist_to_json(file, wordlist):
     with open(file, "w") as jsonfile:
         json.dump(wordlist, jsonfile)
 
 fill_wordlist_nederlands(vocabulary)
+fill_wordlist_english(vocabulary)
 export_wordlist_to_json("wordlist.json", vocabulary)

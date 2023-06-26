@@ -24,6 +24,7 @@ def game(language, word_length, turns, first_letter, strategy):
         possible_answers = reduce(possible_answers, bad_letters, score)
         words_played.append(score)
         show_board(words_played, word_to_guess, first_letter)
+        print(possible_answers)
         if winning_answer(score):
             print("You win")
             return True
@@ -33,29 +34,4 @@ def game(language, word_length, turns, first_letter, strategy):
 
     return False
 
-game("Nederlands", "6", 6, False, "information")
-
-
-# SATER, FAXEN
-
-# S A T E R
-# K E L E N
-# D O Z E N
-# M I X E N
-# H Y F E N
-# HUWEN
-
-# S A T E R
-# K E R E N
-# B U R E N
-# D U R E N
-# H U R E N
-# ZUREN
-
-# S A T E R
-# T O R U S
-# B O R S T
-# D O R S T
-# H O R S T
-# K O R S T
-# VORST
+game("English", "5", 6, False, "information")
