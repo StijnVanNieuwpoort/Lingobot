@@ -3,10 +3,14 @@ from scipy.stats import entropy
 from collections import defaultdict
 import math
 
-possible_answers = get_vocabulary()["Nederlands"]["5"]
-
 
 def generate_possible_outcomes(wordlist):
+    """
+    For every word in wordlist. Keeps track of all words in wordlist that match the possible score if they were to be compared.
+    :param wordlist: (List): List of words.
+    :return: Dict: For every word, for every score, a list of corresponding words.
+    """
+    # Creates a dictionary with roughly this structure: {"WORD": {(0, 0, 2, 2): ["BIRD", "CARD"], (0, 2, 2, 2): ["FORD", "LORD"]....
     outcomes = {}
     for word in wordlist:
         outcomes[word] = {c: [] for c in calc_possible_feedback(len(word))}
@@ -19,11 +23,19 @@ def generate_possible_outcomes(wordlist):
     return outcomes
 
 
-def calculate_entropies(words, possible_words, all_outcomes, all_patterns):
+def calculate_entropies(words, possible_words, all_outcomes, all_feedback):
+    """
+    Calculates the entropy value of every word by counting it's occurrence in all_outcomes.
+    :param words: (List): All words.
+    :param possible_words: (List): All possible words/answers
+    :param all_outcomes: Output of generate_possible_outcomes().
+    :param all_feedback: All possible feedback.
+    :return: List: All words with their current entropy score represented in bits.
+    """
     entropies = {}
     for word in words:
         counts = []
-        for pattern in all_patterns:
+        for pattern in all_feedback:
             matches = set(all_outcomes[word][str(pattern)])
             matches = matches.intersection(possible_words)
             counts.append(len(matches))
@@ -34,24 +46,3 @@ def calculate_entropies(words, possible_words, all_outcomes, all_patterns):
         entropies[word] = -sum(p * math.log2(p) for p in probabilities) if probabilities else 0.0
 
     return entropies
-
-
-# outcomes = generate_possible_outcomes(possible_answers)
-# print(outcomes)
-# outcomes =
-# print(calculate_entropies(possible_answers, possible_answers, outcomes, calc_possible_feedback(5)))
-# print(generate_possible_outcomes(possible_answers))
-
-# def calculate_entropies(words, possible_words, outcomes_dict, all_patterns):
-#     entropies = {}
-#     for word in words:
-#         counts = []
-#         for pattern in all_patterns:
-#             matches = set(outcomes_dict[word][pattern])
-#             matches = matches.intersection(possible_words)
-#             counts.append(len(matches))
-#         entropies[word] = entropy(counts)
-#     return entropies
-
-# outcomes = get_word_outcomes()["Nederlands"]["5"]
-# print(calculate_entropies(possible_answers, possible_answers, outcomes, calc_possible_feedback(5)))

@@ -11,10 +11,9 @@ def game(language, word_length, turns, first_letter, strategy):
     possible_answers = get_vocabulary()[language][word_length]
     bad_letters = []
     score = []
-    show_board(words_played, word_to_guess, first_letter)
+    # show_board(words_played, word_to_guess, first_letter)
 
     for turn in range(turns):
-        print(turn + 1)
         if turn == 0:
             guess = first_turn_best_word(language, word_length)
         else:
@@ -23,8 +22,8 @@ def game(language, word_length, turns, first_letter, strategy):
         bad_letters = calc_bad_letters(score, bad_letters)
         possible_answers = reduce(possible_answers, bad_letters, score)
         words_played.append(score)
+        print(f"{turn + 1}:", end=" ")
         show_board(words_played, word_to_guess, first_letter)
-        print(possible_answers)
         if winning_answer(score):
             print("You win")
             return True
@@ -34,4 +33,4 @@ def game(language, word_length, turns, first_letter, strategy):
 
     return False
 
-game("English", "5", 6, False, "information")
+game("English", "5", 6, False, "simple")

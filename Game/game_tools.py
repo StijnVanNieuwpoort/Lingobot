@@ -7,6 +7,9 @@ from ast import literal_eval
 
 
 def get_vocabulary():
+    """
+    :return: Dictionary: wordlist.json as dict
+    """
     # Get the current directory
     current_directory = os.getcwd()
 
@@ -21,6 +24,9 @@ def get_vocabulary():
 
 
 def get_word_outcomes():
+    """
+    :return: Dictionary: word-outcomes.json as dict.
+    """
     # Get the current directory
     current_directory = os.getcwd()
 
@@ -35,6 +41,9 @@ def get_word_outcomes():
 
 
 def get_word_bit_scores():
+    """
+    :return: Dictionary: word-entropies.json as dict.
+    """
     # Get the current directory
     current_directory = os.getcwd()
 
@@ -49,6 +58,12 @@ def get_word_bit_scores():
 
 
 def random_word(language, word_length):
+    """
+    Determines random word from wordlist.
+    :param language: Language random word should be in.
+    :param word_length: Length random word should have
+    :return: String: Random word from wordlist.
+    """
     wordlist = get_vocabulary()
     secret_word = random.choice(wordlist[language][word_length])
 
@@ -56,6 +71,11 @@ def random_word(language, word_length):
 
 
 def calc_possible_feedback(word_length):
+    """
+    Determines possible word_scores for a specific word_length according to feedback of evaluate_word_pattern()
+    :param word_length: Length of the word of which feedback should be determined.
+    :return: List: Of tuples with possible word scores.
+    """
     # Creates every possible feedback combination
     combinations = list(itertools.product([0, 1, 2], repeat=word_length))
 
@@ -76,11 +96,22 @@ def calc_possible_feedback(word_length):
 
 
 def calc_highest_info_word(word_bit_scores):
+    """
+    Determines word with the highest bit_score according to word_bit_scores calculated in calculate_entropies().
+    :param word_bit_scores: All words and their calculated bit scores.
+    :return: String: Word with the hightest bit_score.
+    """
     highest_bit = max(word_bit_scores.values())
     return list(word_bit_scores.keys())[list(word_bit_scores.values()).index(highest_bit)]
 
 
 def first_turn_best_word(language, word_length):
+    """
+    Hardcoded words with highest bit_scores for every language and word_length on first turn when nothing has been played yet.
+    :param language: Language the word should be in.
+    :param word_length: Length the word should have.
+    :return: String: Word with highest turn 1 bit_score.
+    """
     best_words = []
     if language == "Nederlands":
         best_words = ["AI", "AIO", "ROES", "SATER", "SINTER"]
@@ -90,11 +121,3 @@ def first_turn_best_word(language, word_length):
     for word in best_words:
         if len(word) == int(word_length):
             return word
-
-    return 0
-
-
-# print(calc_highest_info_word(get_word_bit_scores()["Nederlands"]["5"]))
-# print(first_turn_best_word("Nederlands", "5"))
-# print(calc_highest_info_word(get_word_bit_scores()["English"]["5"]))
-# print(first_turn_best_word("English", "5"))
