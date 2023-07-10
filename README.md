@@ -1,5 +1,9 @@
 # Lingobot
-No application or main yet. Run the computer_game.py file to test an algorithm. Make sure to run filter_outcomes.py first to fill the word-outcomes.json file with necessary data to run the information algorithm.
-This might take a while.
+Welcome to the Lingobot! Here you can play a game if Lingo by running the pygame_playergame.py file in the Games folder.
 
-Warning! This project is unfinished and will see improvements.
+To test out the algorithm:
+1. Make sure to run the filler_outcomes.py first to fill the word-outcomes.json file with the necessary data for the algorithm to function properly.
+2. Run pygame_computergame.py to see the algorithm solve a word. Or run computergame.py for a console vieuw with more control (adding prints for example).
+
+To run tests:
+Three test files are present in this project: testEntropy.py, testEvaluation.py and testGametools.py.
