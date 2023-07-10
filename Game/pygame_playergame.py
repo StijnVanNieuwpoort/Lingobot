@@ -216,7 +216,7 @@ def check_guess(guess_to_check):
 def new_game():
     pygame.draw.rect(WINDOW, "white", (10, 600, 1000, 600))
     play_again_font = pygame.font.Font(None, 40)
-    play_again_text = play_again_font.render("Press any key to play again", True, "black")
+    play_again_text = play_again_font.render("Press ENTER to Play Again!", True, "black")
     play_again_rect = play_again_text.get_rect(center=(WIDTH / 2, 700))
     word_was_text = play_again_font.render(f"The word was {SECRET_WORD}!", True, "black")
     word_was_rect = word_was_text.get_rect(center=(WIDTH / 2, 650))

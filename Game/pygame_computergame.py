@@ -264,40 +264,44 @@ def computer_game():
     score = []
     guess = ""
     while True:
-        if game_result != "":
-            break
-        else:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if len(current_guess) == 5:
-                    check_guess(current_guess)
-                    score = evaluate_word(guess, SECRET_WORD)
-                    bad_letters = calc_bad_letters(score, bad_letters)
-                    possible_answers = reduce(possible_answers, bad_letters, score)
-                    words_played.append(score)
 
-                else:
-                    if turn == 0:
-                        guess = first_word
-                        for char in guess:
-                            create_new_letter(char)
-                        turn += 1
-                    else:
-                        guess = information(possible_answers, "English", "5")
-                        for char in guess:
-                            create_new_letter(char)
-
-    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    if game_result != "":
-                        reset()
+            if len(current_guess) == 5:
+                check_guess(current_guess)
+                score = evaluate_word(guess, SECRET_WORD)
+                bad_letters = calc_bad_letters(score, bad_letters)
+                possible_answers = reduce(possible_answers, bad_letters, score)
+                words_played.append(score)
+
+            if game_result != "":
+                new_game()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        if game_result != "":
+                            turn = 0
+                            first_word = first_turn_best_word("English", "5")
+                            words_played = []
+                            possible_answers = get_vocabulary()["English"]["5"]
+                            bad_letters = []
+                            score = []
+                            guess = ""
+                            reset()
+
+            else:
+                if turn == 0:
+                    guess = first_word
+                    for char in guess:
+                        create_new_letter(char)
+                    turn += 1
+                else:
+                    guess = information(possible_answers, "English", "5")
+                    for char in guess:
+                        create_new_letter(char)
+
+
 
 
 computer_game()
