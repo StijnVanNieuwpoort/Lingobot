@@ -8,7 +8,6 @@ colorama.init(autoreset=True)
 def game(language, word_length, first_letter):
     word_to_guess = random_word(language, word_length)
     words_played = []
-    show_board(words_played, word_to_guess, first_letter)
 
     for turn in range(0, 5):
         guess = guess_word(language, word_length)

@@ -105,6 +105,18 @@ def calc_highest_info_word(word_bit_scores):
     return list(word_bit_scores.keys())[list(word_bit_scores.values()).index(highest_bit)]
 
 
+def calc_rounded_bit_score_of_word(word, word_bit_scores, decimal):
+    """
+    Determines the bit_score of word in word_bit_scores rounded to decimal.
+    :param word: Word from which to check bit_score.
+    :param word_bit_scores: Dict of word_bit_scores
+    :param decimal: Amount of characters behind the comma.
+    :return: Round bit_score of word.
+    """
+    bit_score = word_bit_scores[word]
+    return round(bit_score, decimal)
+
+
 def first_turn_best_word(language, word_length):
     """
     Hardcoded words with highest bit_scores for every language and word_length on first turn when nothing has been played yet.
